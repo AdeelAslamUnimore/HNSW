@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/hnsw_main.dir/hnsw.cpp.o CMakeFiles/hnsw_main.dir/main.cpp.o -o hnsw_main  -lm 

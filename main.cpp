@@ -17,13 +17,18 @@ void randomTest(int numItems, int dim, int numQueries, int K) {
 			temp[d] = distribution(generator);
 		}
 		randomItems.emplace_back(temp);
+
+
 	}
+	
 	random_shuffle(randomItems.begin(), randomItems.end());
 
 	// construct graph
-	HNSWGraph myHNSWGraph(10, 30, 30, 10, 2);
+	HNSWGraph myHNSWGraph(100, 30, 30, 10, 2, 12);
 	for (int i = 0; i < numItems; i++) {
 		if (i % 10000 == 0) cout << i << endl;
+		//cout<<"===="<<randomItems[i].values.size();
+		//exit(0);
 		myHNSWGraph.Insert(randomItems[i]);
 	}
 	
@@ -56,10 +61,12 @@ void randomTest(int numItems, int dim, int numQueries, int K) {
 
 		if (knns[0] == distPairs[0].second) numHits++;
 	}
+	myHNSWGraph.printGraph();
 	cout << numHits << " " << total_brute_force_time / numQueries  << " " << total_hnsw_time / numQueries << endl;
 }
 
 int main() {
-	randomTest(10000, 4, 100, 5);
+	//cout<<"This";
+	randomTest(1000, 4, 100, 5);
 	return 0;
 }

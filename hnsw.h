@@ -8,8 +8,9 @@
 using namespace std;
 
 struct Item {
-	Item(vector<double> _values):values(_values) {}
 	vector<double> values;
+	Item(vector<double> _values):values(_values) {}
+	
 	// Assume L2 distance
 	double dist(Item& other) {
 		double result = 0.0;
@@ -19,7 +20,7 @@ struct Item {
 };
 
 struct HNSWGraph {
-	HNSWGraph(int _M, int _MMax, int _MMax0, int _efConstruction, int _ml):M(_M),MMax(_MMax),MMax0(_MMax0),efConstruction(_efConstruction),ml(_ml){
+	HNSWGraph(int _M, int _MMax, int _MMax0, int _efConstruction, int _ml,int _testing):M(_M),MMax(_MMax),MMax0(_MMax0),efConstruction(_efConstruction),ml(_ml), testing(_testing){
 		layerEdgeLists.push_back(unordered_map<int, vector<int>>());
 	}
 	
@@ -42,9 +43,10 @@ struct HNSWGraph {
 	vector<unordered_map<int, vector<int>>> layerEdgeLists;
 	// enter node id
 	int enterNode;
-
+	
 	default_random_engine generator;
-
+// testing
+	int testing;
 	// methods
 	void addEdge(int st, int ed, int lc);
 	vector<int> searchLayer(Item& q, int ep, int ef, int lc);
@@ -52,13 +54,14 @@ struct HNSWGraph {
 	vector<int> KNNSearch(Item& q, int K);
 
 	void printGraph() {
-		for (int l = 0; l < layerEdgeLists.size(); l++) {
+		for (int l = layerEdgeLists.size()-1; l < layerEdgeLists.size(); l++) {
 			cout << "Layer:" << l << endl;
 			for (auto it = layerEdgeLists[l].begin(); it != layerEdgeLists[l].end(); ++it) {
 				cout << it->first << ":";
 				for (auto ed: it->second) cout << ed << " ";
 				cout << endl;
 			}
+			exit(0);
 		}
 	}
 };
